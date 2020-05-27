@@ -1,7 +1,7 @@
 # totp
 simple TOTP implementation POC using following params:
 
-X = 30, T0 = 0
+10 digits TOTP with X = 30, T0 = 0
 
 TOTP = HOTP(K, T) More specifically, T = (Current Unix time - T0) / X, 
 
