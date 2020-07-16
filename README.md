@@ -1,10 +1,4 @@
-# totp
-simple TOTP implementation POC using following params:
-
-10 digits TOTP with X = 30, T0 = 0
-
-TOTP = HOTP(K, T) More specifically, T = (Current Unix time - T0) / X, 
-
-where the default floor function is used in the computation.
-
-HOTP(K,C) = Truncate(HMAC-SHA-512(K,C))
+# otp
+simple TOTP and HOTP implementation POC following RFC4226, RFC6238
+https://tools.ietf.org/html/rfc4226
+https://tools.ietf.org/html/rfc6238
