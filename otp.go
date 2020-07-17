@@ -2,7 +2,7 @@ package otp
 
 import (
 	"crypto/hmac"
-	"crypto/sha256"
+	"crypto/sha1"
 	"fmt"
 	"hash"
 	"math"
@@ -17,13 +17,16 @@ type Option struct {
 
 // DefaultOption represent the default otp option.
 var DefaultOption = &Option{
-	HashAlgo: sha256.New,
+	HashAlgo: sha1.New,
 	Digits:   6,
 }
 
 // NewOption return a custom otp option
 func NewOption(h func() hash.Hash, d int) *Option {
-	return &Option{h, d}
+	return &Option{
+		HashAlgo: h,
+		Digits:   d,
+	}
 }
 
 // GenerateHOTP using default option
@@ -31,9 +34,17 @@ func GenerateHOTP(secret string, counter int64) string {
 	return DefaultOption.GenerateHOTP(secret, counter)
 }
 
+func ValidateHOTP(code, secret string, counter int64) bool {
+	return code == DefaultOption.GenerateHOTP(secret, counter)
+}
+
 // GenerateTOTP using default option
 func GenerateTOTP(secret string, interval int64) string {
 	return DefaultOption.GenerateTOTP(secret, interval)
+}
+
+func ValidateTOTP(code, secret string, interval int64) bool {
+	return code == DefaultOption.GenerateTOTP(secret, interval)
 }
 
 // GenerateHOTP with custom option
